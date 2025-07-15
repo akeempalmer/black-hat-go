@@ -193,3 +193,160 @@ func main() {
 ```
 
 ## Control Structures
+
+- Go's primary conditional is the the if/else structure
+
+```
+if x == 1 {
+    fmt.Println("X is equal to 1")
+} 
+else {
+    fmt.Println("X is not equal to 1")
+}
+```
+
+- For more complex conditions Go provides the switch statement 
+
+```
+switch x {
+    case "foo":
+        fmt.Println("Found foo")
+    case "bar":
+        fmt.Println("Found bar")
+
+    default:
+        fmt.Println("Default Case")
+}
+```
+
+- Type switch are using for trying to understand the underlying type of an interface
+
+```
+func foo(i interface{}){
+    switch v := i.(type) {
+        case int:
+            fmt.Println("I'm an interger")
+        case string:
+            fmt.Println("I'm a string")
+        default: 
+            fmt.Println("Unknown type!")
+    }
+} 
+```
+
+- For loop for performing iteratioon or repeating sections of code.
+
+```
+for i := 0; i < 10; i++ {
+    fmt.Println(i)
+}
+```
+
+- Looping over a slice
+
+```
+nums := []int{2,4,6,8}
+for idx, val := range nums {
+    fmt.Println(idx, val)
+}
+```
+
+### Concurrency 
+
+- Using goroutines to run functions or methods simulaneously as lightweight threads.
+- Using the go keyword.
+
+```
+func f() {
+    fmt.Println("f function")
+}
+
+func main() {
+    go f() 
+    time.Sleep(1 * time.Second)
+    fmt.Println("main function")
+}
+```
+
+- Go uses channels for synchronizing their execution and communicate with one another
+
+```
+func strlen(s string, c chan int) {
+    c <- len(s)
+}
+
+func main() {
+    c := make(chan int)
+    go strlen("Saluations", c)
+    go strlen("World", c)
+    x, y := <-c , <-c 
+    fmt.Println(x, y, x+y)
+}
+```
+
+### Error Handling
+
+- Go defines a built-in error type 
+
+```
+type error interface {
+    Error() string
+}
+```
+
+- Custom errors 
+
+```
+type MyError string
+func (e MyError) Error() string {
+    return string(e)
+}
+```
+
+- Error handling pattern
+
+```
+func foo() error {
+    return errors.New("Some Error Occurred!")
+}
+
+func main() {
+    if err := foo(); err != nil {
+        // Handle the error
+    }
+}
+```
+
+### Handling Structured Data
+
+- Handling XML and JSON data by unmarshalling and marshalling, using the enconding/json and encoding/xml standard library. 
+- These can be transform from string to structured data types.
+
+- Serializing a structure to a byte slice and then subsequently deserializing the byte slice back to a structure:
+
+```
+type foo struct {
+    Bar string
+    Baz string
+}
+
+func main() {
+    f := Foo{"Joe Junior", "Hello Shabado"}
+    b, _ := json.Marshal(f)
+    fmt.Println(string(b))
+    json.Unmarshal(b, &f)
+}
+```
+
+- Field tags are metadata elements that you assign to your struct fields to define how the marshaling and unmarshaling logic can find and treat the affilicated elements..
+
+```
+type Foo struct {
+    Bar string `xml:"id, attr"`
+    Baz string `xml:"parent>child"`
+}
+```
+
+- The XML encoder reflectively determines the names of elements, using the tag directives, so each field is handled according to your needs.
+- ASN.1 encoder
+- MessagePack encoder
