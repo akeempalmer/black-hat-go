@@ -40,7 +40,7 @@
 2. go build - produces a standalone binary file on disk, without execution. (can use -o to specifiy the output build's name).
     - By default the produced binary file contains debuggig information adn the symbol table, which can bloat the size of the file. To reduce the file size you ca include additional flags during the build process to strip this information from the binary.
 
-```go build -ldflags "-w -s"```
+```go build -ldflags "-w -s" <filename>```
 
 3. Cross Compiling -  compiling for different architecture from your evniornment. [https://golang.org/doc/install/source#environment/]
 
