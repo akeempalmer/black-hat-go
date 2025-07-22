@@ -64,3 +64,33 @@ fmt.Sprintf(format string, a ...interfcae{})
 ```
 time ./tcp-scanner-too-fast 
 ```
+
+- Using the wait group to control the concurrency
+
+```
+var wg sync.WaitGroup
+```
+
+### Synchronized Scanning Using WaitGroup
+
+- This version uses a waitgroup connection to managae concurrent workers. 
+
+- This version is still to fast, that the connection is not established successfully, on large counts of calls.
+
+
+### Port Scanning Using a Worker Pool
+
+-  Using a pool of goroutines to manage concurrent work being performed. 
+
+```
+// Create our worker function for processing work
+func worker(ports chan int, wg *sync.WaitGroup) {
+	for p := range ports {
+		fmt.Println(p)
+		wg.Done()
+	}
+
+}
+```
+
+### Multichannel Communication
