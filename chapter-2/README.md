@@ -94,3 +94,9 @@ func worker(ports chan int, wg *sync.WaitGroup) {
 ```
 
 ### Multichannel Communication
+
+- https://github.com/blackhat0go/bhg/blob/master/ch-2/scanner-port-format/
+
+## Building a TCP Proxy
+
+- 
