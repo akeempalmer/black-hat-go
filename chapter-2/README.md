@@ -99,4 +99,58 @@ func worker(ports chan int, wg *sync.WaitGroup) {
 
 ## Building a TCP Proxy
 
-- 
+- Building a TCP server, as before we used the net package as a client.
+
+- Will be building a proxy server for transfering data.
+
+### Using io.Reader and io.Writer
+
+- Cornerstone package for all input/output tasks 
+
+```
+type Reader interface {
+	Read(p []byte) (n int, err error)
+}
+
+type Writer interface {
+	Write(p []byte) (n int, err error)
+}
+```
+
+- Using the Reader interface, Writer interface
+
+```
+type FooReader struct {}
+func (fooReader *FooReader) Read(p []byte) (int,error) {
+	// Read some data from somewhere, anywhere.
+	return len(dataReadFromSomewhere), nil
+}
+```
+
+- Using the copy function to copy data from Reader to a Writer
+
+```
+func Copy(dst io.Writer, src io.Reader) (written int64, error)
+```
+
+### Creating the Echo Server
+
+- Using the .net.Conn package to start a server and learning how to read and write data to and from a socket.
+
+- .net.Conn is Go's steam-oriented network connection.
+
+- Conn implements both Read and Write function, so this is an instance of both the Reader and Writer interfaces.
+
+- We will use net.Listen to open a TCP listener on a specific port, once a client connect, the Accept method creates and returns a Conn object, used for sending and recieving data.
+
+### Improving the Code by Creating a Buffered Listener
+
+- Using the bufio package wrapping a Reader and Writer to create a buffered I/O mechanism.
+
+- bufio.NewReader creates a buffered reader, which calls ReadString('\n') with a delimiter for where to stop reading '\n'
+
+- bufio.NewWriter creates a buffered writer, which calls WriteString() with passes the data to the socket in conn.
+
+- After writing the data, you must call writer.Flush() to have the data written to the writer.
+
+### Proxying a TCP Client
