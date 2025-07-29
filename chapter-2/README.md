@@ -154,3 +154,44 @@ func Copy(dst io.Writer, src io.Reader) (written int64, error)
 - After writing the data, you must call writer.Flush() to have the data written to the writer.
 
 ### Proxying a TCP Client
+
+- Using io.Copy() to send bytes from src to dst, in both and using dial and accept from the net package for communicating with the client we are forwarding too. 
+
+### Replicating Netcat for Command Execution
+
+- Netcat is the TCP/IP Swiss Army knife - a more flexible version of Telnet.
+
+- This command creates a listening server on port 13337
+
+```
+nc -lp 13337 -e /bin/bash
+```
+
+- Using Go's os/exec package for running operating systems commands.
+
+- Command(name string, arg ...string)
+
+- Creating a custom writer to use for the cmd.Stdout, which will handle flushing the output as they are sent.
+
+- This flusher takes in the Writer which will be passed on from conn
+
+- We will also introduce the pipe function io.Pipe(), Go's synchronous, in-memory pipe that can be used for connecting Redaers and Writers:
+
+```
+func Pipe() (*PipeReader, *PipeWriter)
+```
+
+- Using the PipeReader and PipeWriter allows you to avoid having to explicitly flush the writer and synchronously connect stdout and the TCP connection. 
+
+- This netcat-exec enables us a a server listener expecting a connection, we can use similar setup to enable this as a client. 
+
+1. Establish a connection to a remote listneer via net.Dial(network, address string)
+2. Initialize a Cmd via exec.Command(name string, arg ...string).
+3. Redirect Stdin and Stdout properties to utilize the net.Conn object
+4. Run the command.
+
+### Summary
+
+- Exploring Go as it relates to networking, I/O, and conncurrency. 
+
+- Code based ["https://github.com/blackhat-go/bhg/blob/master/ch-2/netcat-exec/main.go"](Code Base)
