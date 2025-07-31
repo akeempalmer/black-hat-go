@@ -31,3 +31,42 @@ func PostForm(url string, data url.Values) (resp *Response, err error)
 ```
 
 ### Generating a Request
+
+- To generate a request with one of the verbs (POST, GET, DELETE, PATCH, PUT), you can use the NewRequest() function to create the Request struct, which will be sent using the Client function's Do() method. (http.NewRequest())
+
+```
+func NewRequest(method, url string, body io.Reader) (req *Request, err error)
+```
+
+- A DELETE request
+
+```
+req, err := http.NewRequest("DELETE", "https://www.google.com/robots.txt", nil)
+var client http.Client
+resp, err := client.Do(req)
+// Read response body and close.
+```
+
+### Using Structured Response Parsing
+
+- Inspecting various components of the HTTP response is a crucial aspect of any HTTP-related task, like reading the response body, accessing cookies and headers, or simply inspecting the HTTP status code. 
+
+- The Response type contains an exported Body parameter, which is of type io.ReadCloser.
+
+- An io.ReadCloser is an interface that requires the contract of a Close() function and an io.Reader
+
+## Building an HTTP Client That Interacts with Shodan
+
+- Before performing any authorized adversarial activies against an organization, begin with reconnaissance.
+
+- This starts with passive techniques that don't send packets to the target; that way, detection of the activity is next to impossible.
+
+- Attackers use a variety of sources and services - including social networks, public records, and search engines to gain potentially useful information about the target.
+
+- Shodan (https://www.shodan.io/), self-described as "the world's first search engine for internet-connected devices"
+
+- Think of Shodan as a repository of scan data, even if it does much, much more.
+
+### Reviewing the Steps for Building an API Client
+
+- Building an API Client that interacts with Shodan API, parsing the results and displaying relevant information.
