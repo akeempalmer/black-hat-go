@@ -70,3 +70,43 @@ resp, err := client.Do(req)
 ### Reviewing the Steps for Building an API Client
 
 - Building an API Client that interacts with Shodan API, parsing the results and displaying relevant information.
+
+### Designing the Project Structure
+
+- The project will be structured in a resuable way, allowing the packages to be as a library in its own packages.
+
+```
+package shodan
+\\ shodan
+\\\\api.go
+\\\\host.go
+\\\\shodan.go
+```
+
+### Cleaning Up Api Calls
+
+- Building a resuable stack to rebuild the http request headers/host from.
+
+```
+func APIInfo(token, url string) { --snip-- }
+
+func HostSearch(token, url string) { --snip-- }
+```
+
+### Querying Your Shodan Subscription
+
+- Interation with Shodan, per the documentation, the call to query your subscription plan information as follow:
+
+```
+https://api.shodan.io/api-info?key={YOUR_API_KEY}
+```
+
+- Building the types that will allow us to Unmarshal the response.
+
+### Creating a Client
+
+- Implementing a client to take a search term from the command line and using the created API to interface with shodan services..
+
+## Interacting with Metasploit
+
+- TODO
