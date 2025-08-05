@@ -109,4 +109,10 @@ https://api.shodan.io/api-info?key={YOUR_API_KEY}
 
 ## Interacting with Metasploit
 
-- TODO
+- Metasploit is a frame work used to perform a variety of adversarial techniques, including reconnaissance, exploitation, command and control, persistence, lateral network movement, payload creation and delivery, privilege escalation, and more. 
+
+### Setting Up The Environment
+
+- Download and install the Metasploit community edition. 
+
+- Starting the Metasploit and the msgrpc server

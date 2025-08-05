@@ -1,8 +1,8 @@
 package shodan
 
 import (
+	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 )
 
@@ -23,18 +23,11 @@ func (s *Client) APIInfo() (*APIInfo, error) {
 
 	defer res.Body.Close()
 
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
+	var ret APIInfo
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 
-	fmt.Println("API Response: ", string(body))
-	return nil, nil
-	// var ret APIInfo
-	// if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-	// 	return nil, err
-	// }
-
-	// return &ret, nil
+	return &ret, nil
 
 }

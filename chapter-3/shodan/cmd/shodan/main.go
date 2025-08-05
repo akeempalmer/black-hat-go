@@ -6,11 +6,17 @@ import (
 	"os"
 
 	"github.com/akeempalmer/black-hat-go/chapter-3/shodan/shodan"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	if len(os.Args) != 2 {
 		log.Fatalln("Usage: shodan searchterm")
+	}
+
+	err := godotenv.Load("../.env")
+	if err != nil {
+		log.Fatalln("Error loading .env file")
 	}
 
 	apiKey := os.Getenv("SHODAN_API_KEY")
