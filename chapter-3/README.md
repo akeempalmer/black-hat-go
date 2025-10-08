@@ -116,3 +116,9 @@ https://api.shodan.io/api-info?key={YOUR_API_KEY}
 - Download and install the Metasploit community edition. 
 
 - Starting the Metasploit and the msgrpc server
+
+```
+msfconsole
+
+load msgrpc Pass=s3cr3t ServerHost=10.0.1.6
+```
